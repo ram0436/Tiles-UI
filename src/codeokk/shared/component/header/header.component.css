@@ -1,0 +1,421 @@
+.sticky-header {
+  position: fixed !important;
+  top: 0;
+  z-index: 1000;
+  width: 100%; /* Make sure it spans the full width */
+}
+
+.header-bar {
+  padding: 15px 0 15px 0;
+  background-color: #202020;
+  color: #fff;
+}
+
+.header-container {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  max-width: 1396px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.icon {
+  cursor: pointer;
+}
+
+.icon-search {
+  color: #202020 !important;
+}
+
+.header-container .top-bar {
+  display: flex;
+  align-items: center;
+}
+
+.top-bar .logo-container {
+  width: 25%;
+}
+
+.logo-text {
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.top-bar .search-bar-container {
+  width: 45%;
+  display: flex;
+  justify-content: center;
+}
+
+.query {
+  width: 100%;
+  padding: 3px 15px;
+  background: #fff;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.query input {
+  width: 95%;
+  padding: 10px 0;
+  border: none;
+  outline: none;
+  color: #333;
+}
+
+a.submit {
+  font-size: 30px;
+  margin-left: 10px;
+}
+
+.top-bar .options-container {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  align-items: flex-end;
+}
+
+.options-top,
+.options-bottom {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.nav-bar {
+  background-color: #343434;
+  color: #fff;
+  position: relative;
+}
+
+.nav-container {
+  padding: 0;
+  max-width: 1396px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.nav-bar .navbar-menus {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.nav-bar .navbar-menus .navbar-menu-title {
+  padding: 15px 20px;
+  font-size: 14px;
+  line-height: 24px;
+  color: #acacac;
+}
+
+.navbar-menu-title:hover {
+  color: #ffcb08 !important;
+  background-color: #202020;
+  cursor: pointer;
+}
+
+.navbar-submenu {
+  display: block;
+  width: 100%;
+  position: absolute;
+  top: 50px;
+  left: 0;
+  background-color: #202020;
+  z-index: 1;
+  color: #fff !important;
+}
+
+.navbar-submenu a {
+  color: #fff !important;
+}
+
+.obl-submenu-row {
+  display: none;
+}
+
+.navbar-menu:hover .obl-submenu-row {
+  display: block;
+}
+
+.navbar-submenu .container {
+  padding: 0;
+  max-width: 1396px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.obl-submenu-row .obl-submenu-nav {
+  height: 500px;
+  overflow: hidden;
+  overflow-y: auto !important;
+  margin: 30px 0 !important;
+  scrollbar-color: #fff #bebebe; /* Thumb color and track color for Firefox */
+}
+
+/* Scrollbar track (the background) */
+.obl-submenu-row .obl-submenu-nav::-webkit-scrollbar-track {
+  border-radius: 10px; /* Border radius for the track */
+}
+
+/* Scrollbar thumb (the actual scrolling element) */
+.obl-submenu-row .obl-submenu-nav::-webkit-scrollbar-thumb {
+  border-radius: 10px; /* Border radius for the thumb */
+}
+
+/* Remove the arrows from the scrollbar */
+.obl-submenu-row .obl-submenu-nav::-webkit-scrollbar-button {
+  display: none !important; /* Hides the top and bottom arrows */
+}
+
+.flex-class {
+  display: flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  flex-flow: wrap;
+  width: 100%;
+}
+
+.obl-submenu-row .obl-submenu-nav .titleBox {
+  width: 18%;
+  padding-right: 15px;
+}
+
+.obl-submenu-row .obl-submenu-nav .titleBox ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.obl-submenu-row .obl-submenu-nav .titleBox ul li a {
+  color: #acacac !important;
+  font-size: 14px;
+  position: relative;
+  transition: all 0.5s;
+  overflow: hidden;
+  display: inline-block;
+  line-height: 24px;
+}
+
+.whiteTitleHead {
+  color: #fff;
+}
+
+.obl-submenu-row .obl-submenu-nav .titleHead a {
+  color: #fff;
+  padding-bottom: 10px;
+  display: inline-block;
+}
+
+.obl-submenu-row .obl-submenu-nav .titleBox ul.titlepattern li .pattern {
+  display: flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  padding-bottom: 15px;
+}
+
+.obl-submenu-row .obl-submenu-nav .titleBox ul.titlepattern li .pattern img {
+  width: 40px;
+  height: 40px;
+}
+
+.obl-submenu-row
+  .obl-submenu-nav
+  .titleBox
+  ul.titlepattern
+  li
+  .pattern
+  .patternName {
+  width: calc(100% - 40px);
+  padding-left: 10px;
+}
+
+.obl-submenu-row
+  .obl-submenu-nav
+  .titleBox
+  ul.titlepattern
+  li
+  .pattern
+  .patternName
+  span {
+  color: #a8a8a8;
+  font-size: 12px;
+  width: 100%;
+  display: block;
+  line-height: normal;
+}
+
+.obl-submenu-row .obl-submenu-nav .tilecolor {
+  width: 100%;
+}
+
+.obl-submenu-row .obl-submenu-nav .tilecolor ul li {
+  margin: 0.5em 0.5em 0;
+  text-align: center;
+  padding: 0 0.4em;
+}
+
+.obl-submenu-row .obl-submenu-nav .tilecolor ul li .swatch {
+  width: 35px;
+  height: 35px;
+  display: block;
+  padding: 0;
+  border-radius: 50%;
+  margin: 0 auto;
+  background: #fff;
+}
+
+.obl-submenu-row .obl-submenu-nav .tilecolor ul li span {
+  color: #a8a8a8;
+  padding-top: 5px;
+  display: inline-block;
+}
+
+.obl-submenu-row .obl-submenu-nav .tilecolor ul li .swatch2 {
+  background: #040404;
+}
+
+.obl-submenu-row .obl-submenu-nav .tilecolor ul li .swatch4 {
+  background: #865340;
+}
+
+.obl-submenu-row .obl-submenu-nav .tilecolor ul li .swatch5 {
+  background: #c9b194;
+}
+
+.obl-submenu-row .obl-submenu-nav .tilecolor ul li .swatch6 {
+  background: #eadeba;
+}
+
+.obl-submenu-row .obl-submenu-nav .tilecolor ul li .swatch7 {
+  background: #ede3c4;
+}
+
+.obl-submenu-row .obl-submenu-nav .tilecolor ul li .swatch8 {
+  background: #feca2d;
+}
+
+.obl-submenu-row .obl-submenu-nav .tilecolor ul li .swatch9 {
+  background: #2b70f1;
+}
+
+.obl-submenu-row .obl-submenu-nav .tilecolor ul li .swatch10 {
+  background: #3dc72c;
+}
+
+.obl-submenu-row .obl-submenu-nav .tilecolor ul li .swatch11 {
+  background: #b4b4b4;
+}
+
+.obl-submenu-row .obl-submenu-nav .tilecolor ul li .swatch12 {
+  background: #f6a9e8;
+}
+
+.obl-submenu-row .obl-submenu-nav .tilecolor ul li .swatch14 {
+  background: #fc431a;
+}
+
+.obl-submenu-row .obl-submenu-nav .tilecolor ul li .swatch15 {
+  background: #cf4e46;
+}
+
+.obl-submenu-row .obl-submenu-nav .tilecolor ul li .swatch16 {
+  background: linear-gradient(to right bottom, #cc0076, #a02f87, #629834);
+}
+
+.menu-slider {
+  padding-top: 5px;
+  height: 210px;
+  margin-top: 155px;
+  max-width: 1300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.slide.slick-slide {
+  width: 190px !important;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: #202020 !important;
+}
+
+.carousel {
+  position: relative;
+  width: 100%;
+}
+
+.slide {
+  text-align: center;
+}
+
+.slide img {
+  width: 100%;
+  height: 160px;
+  border-radius: 8px;
+}
+
+.menu-item {
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.menu-item p {
+  margin-top: 7px;
+  font-size: 14px;
+  line-height: normal;
+  color: #202020;
+}
+
+::ng-deep .slick-prev,
+::ng-deep .slick-next {
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.5) !important;
+  border: none;
+  border-radius: 50%;
+  color: white !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  top: 37% !important;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.slick-prev:hover,
+.slick-next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+::ng-deep .slick-prev {
+  left: -45px !important; /* Adjust as needed */
+}
+
+::ng-deep .slick-next {
+  right: -45px !important; /* Adjust as needed */
+}
+
+.slick-prev.slick-disabled,
+.slick-next.slick-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.slick-arrow i {
+  font-size: 20px;
+}
+
+::ng-deep .slick-track {
+  width: 2123px !important;
+}
