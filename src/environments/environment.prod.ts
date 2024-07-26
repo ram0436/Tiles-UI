@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl: "https://khushi-api.azurewebsites.net/api/",
+  baseUrl: "https://tiles-api.azurewebsites.net/api/",
 };

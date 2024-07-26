@@ -52,7 +52,7 @@ img {
 *,
 p {
   padding: 0;
-  color: #fff;
+  /* color: #fff; */
   font-size: 14px;
   line-height: 24px;
 }

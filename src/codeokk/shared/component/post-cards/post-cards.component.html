@@ -1,0 +1,106 @@
+<div class="products-container row-base">
+  <section style="width: 98%">
+    <div class="products-cotainer">
+      <div class="products" [ngClass]="{ 'no-wrap': productDetailsRoute }">
+        <div class="product" *ngFor="let product of products">
+          <a [routerLink]="'/product-details/' + product.productCode">
+            <div class="image-container">
+              <img
+                [src]="product.productImageList[0].imageURL"
+                class="product-img"
+              />
+              <span class="ribbon-featured" *ngIf="product.isNewLaunch">
+                <strong [class.ribbon]="true" class="stock-status">
+                  <span class="hide-visually">This ad is</span>
+                  New
+                </strong>
+              </span>
+            </div>
+            <div class="product-info">
+              <a>
+                <p class="product-name">{{ product?.name }}</p>
+                <p class="product-desc">
+                  {{ product?.material[0].name }}
+                </p>
+                <p class="product-size">
+                  <span
+                    *ngFor="
+                      let sizeDetail of product.productSizeList;
+                      let i = index
+                    "
+                    class="size"
+                  >
+                    {{ sizeDetail.size
+                    }}<span *ngIf="i < product.productSizeList.length - 1"
+                      >,
+                    </span>
+                  </span>
+                </p>
+                <p class="product-price">{{ product?.price }}</p>
+              </a>
+            </div>
+          </a>
+        </div>
+        <h3 *ngIf="products.length == 0">No products avaialble</h3>
+      </div>
+    </div>
+    <div
+      class="load-more-btn"
+      (click)="loadMore()"
+      *ngIf="
+        products.length !== 0 &&
+        !productDetailsRoute &&
+        !isMoreProductsLoading &&
+        !noMoreProducts
+      "
+    >
+      Load More
+    </div>
+    <div
+      class="spinner__loading"
+      *ngIf="isMoreProductsLoading"
+      style="margin-top: 30px"
+    >
+      <div>
+        <mat-spinner></mat-spinner>
+      </div>
+    </div>
+    <!-- <div
+        class="pagination-btns"
+      > -->
+
+    <!-- <div
+          class="prev-btn pgn-btn"
+          (click)="previousPage()"
+          [class.disabled]="currentPage === 1"
+        >
+          <span class="material-icons pgn-icon-prev"> navigate_before </span>
+          <span class="btn-text">Previous</span>
+        </div>
+        <div class="page-nos">
+          <ng-container *ngFor="let page of pageNumbers">
+            <ng-container *ngIf="isNumber(page); else ellipsis">
+              <button
+                class="page-no"
+                [ngClass]="{ 'active-page': page === currentPage }"
+                (click)="goToPage(page)"
+              >
+                {{ page }}
+              </button>
+            </ng-container>
+            <ng-template #ellipsis>
+              <button class="page-no disabled">...</button>
+            </ng-template>
+          </ng-container>
+        </div>
+        <div
+          class="next-btn pgn-btn"
+          (click)="nextPage()"
+          [class.disabled]="currentPage === totalPages"
+        >
+          <span class="btn-text pgn-icon-next">Next</span>
+          <span class="material-icons"> navigate_next </span>
+        </div> -->
+    <!-- </div> -->
+  </section>
+</div>

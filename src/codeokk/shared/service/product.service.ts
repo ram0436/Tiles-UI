@@ -39,11 +39,11 @@ export class ProductService {
   }
 
   addProduct(payLoad: any) {
-    return this.http.post(`${this.BaseURL}/Product`, payLoad);
+    return this.http.post(`${this.BaseURL}Product`, payLoad);
   }
 
   updateProduct(productId: any, payLoad: any) {
-    return this.http.put(`${this.BaseURL}/Product/${productId}`, payLoad);
+    return this.http.put(`${this.BaseURL}Product/${productId}`, payLoad);
   }
 
   searchAds(searchQuery: string): Observable<any[]> {
@@ -80,12 +80,14 @@ export class ProductService {
     colorId: number,
     roomId: number,
     materialId: number,
-    shapeId: number,
-    weavingTechniqueId: number,
-    patternId: number,
-    collectionId: number
+    spaceId: number,
+    designId: number,
+    finishId: number,
+    brandId: number,
+    discountId: number,
+    categoryId: number
   ): Observable<any> {
-    const apiUrl = `${this.BaseURL}Product/GetProductDashboard?pageIndex=${pageIndex}&pageSize=${pageSize}&sizeId=${sizeId}&priceRangeId=${priceRangeId}&colorId=${colorId}&roomId=${roomId}&materialId=${materialId}&shapeId=${shapeId}&weavingTechniqueId=${weavingTechniqueId}&patternId=${patternId}&collectionId=${collectionId}`;
+    const apiUrl = `${this.BaseURL}Product/GetProductDashboard?pageIndex=${pageIndex}&pageSize=${pageSize}&sizeId=${sizeId}&priceRangeId=${priceRangeId}&colorId=${colorId}&roomId=${roomId}&materialId=${materialId}&spaceId=${spaceId}&designId=${designId}&finishId=${finishId}&brandId=${brandId}&discountId=${discountId}&categoryId=${categoryId}`;
     return this.http.get<any>(apiUrl).pipe(
       tap((results) => {
         this.getAllItemsSubject.next(results);
