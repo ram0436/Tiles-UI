@@ -28,7 +28,7 @@ export class FilteredPostsComponent {
   allCategories: any[] = [];
   allsubCategories: any[] = [];
 
-  breadcrumb: string = "Interior / Room / Carpets";
+  breadcrumb: string = "Interior / Room / Tiles";
 
   sizes: any[] = [];
 
