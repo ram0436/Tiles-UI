@@ -14,23 +14,25 @@ export class MasterService {
   private sizesSubject = new BehaviorSubject<any[]>([]);
   private discountsSubject = new BehaviorSubject<any[]>([]);
   private materialsSubject = new BehaviorSubject<any[]>([]);
-  private collectionsSubject = new BehaviorSubject<any[]>([]);
-  private shapesSubject = new BehaviorSubject<any[]>([]);
-  private patternsSubject = new BehaviorSubject<any[]>([]);
   private priceRangesSubject = new BehaviorSubject<any[]>([]);
   private roomsSubject = new BehaviorSubject<any[]>([]);
-  private weavingTechniquesSubject = new BehaviorSubject<any[]>([]);
+  private spacesSubject = new BehaviorSubject<any[]>([]);
+  private finishesSubject = new BehaviorSubject<any[]>([]);
+  private designsSubject = new BehaviorSubject<any[]>([]);
+  private brandsSubject = new BehaviorSubject<any[]>([]);
+  private categoriesSubject = new BehaviorSubject<any[]>([]);
 
   colors$ = this.colorsSubject.asObservable();
   sizes$ = this.sizesSubject.asObservable();
   discounts$ = this.discountsSubject.asObservable();
   materials$ = this.materialsSubject.asObservable();
-  collections$ = this.collectionsSubject.asObservable();
-  shapes$ = this.shapesSubject.asObservable();
-  patterns$ = this.patternsSubject.asObservable();
   priceRanges$ = this.priceRangesSubject.asObservable();
   rooms$ = this.roomsSubject.asObservable();
-  weavingTechniques$ = this.weavingTechniquesSubject.asObservable();
+  spaces$ = this.spacesSubject.asObservable();
+  designs$ = this.designsSubject.asObservable();
+  finishes$ = this.finishesSubject.asObservable();
+  brands$ = this.brandsSubject.asObservable();
+  categories$ = this.categoriesSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -42,23 +44,25 @@ export class MasterService {
       sizes: this.getAllProductSize(),
       discounts: this.getAllDiscount(),
       materials: this.getAllMaterial(),
-      collections: this.getAllCollection(),
-      shapes: this.getAllShape(),
-      patterns: this.getAllPattern(),
       priceRanges: this.getAllPriceRange(),
       rooms: this.getAllRoom(),
-      weavingTechniques: this.getAllWeavingTechnique(),
+      spaces: this.getAllSpace(),
+      finishes: this.getAllFinish(),
+      designs: this.getAllDesign(),
+      brands: this.getAllBrand(),
+      categories: this.getAllCategory(),
     }).subscribe((data: any) => {
       this.colorsSubject.next(data.colors);
       this.sizesSubject.next(data.sizes);
       this.discountsSubject.next(data.discounts);
       this.materialsSubject.next(data.materials);
-      this.collectionsSubject.next(data.collections);
-      this.shapesSubject.next(data.shapes);
-      this.patternsSubject.next(data.patterns);
       this.priceRangesSubject.next(data.priceRanges);
+      this.spacesSubject.next(data.spaces);
+      this.finishesSubject.next(data.finishes);
+      this.designsSubject.next(data.designs);
+      this.brandsSubject.next(data.brands);
+      this.categoriesSubject.next(data.categories);
       this.roomsSubject.next(data.rooms);
-      this.weavingTechniquesSubject.next(data.weavingTechniques);
     });
   }
 
@@ -68,6 +72,26 @@ export class MasterService {
 
   getData() {
     return this.dataSubject.asObservable();
+  }
+
+  getAllFinish(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/Master/GetAllFinish`);
+  }
+
+  getAllCategory(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/Master/GetAllCategory`);
+  }
+
+  getAllDesign(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/Master/GetAllDesign`);
+  }
+
+  getAllSpace(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/Master/GetAllSpace`);
+  }
+
+  getAllBrand(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/Master/GetAllBrand`);
   }
 
   getAllColor(): Observable<any> {
@@ -84,22 +108,6 @@ export class MasterService {
 
   getAllMaterial(): Observable<any> {
     return this.http.get(`${this.baseUrl}/Master/GetAllMaterial`);
-  }
-
-  getAllShape(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/Master/GetAllShape`);
-  }
-
-  getAllWeavingTechnique(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/Master/GetAllWeavingTechnique`);
-  }
-
-  getAllCollection(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/Master/GetAllCollection`);
-  }
-
-  getAllPattern(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/Master/GetAllPattern`);
   }
 
   getAllRoom(): Observable<any> {
