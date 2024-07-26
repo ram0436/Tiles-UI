@@ -1,7 +1,4 @@
 .sticky-header {
-  position: fixed !important;
-  top: 0;
-  z-index: 1000;
   width: 100%; /* Make sure it spans the full width */
 }
 
@@ -41,6 +38,7 @@
   font-size: 26px;
   font-weight: 600;
   cursor: pointer;
+  color: #ffcb08;
 }
 
 .top-bar .search-bar-container {
@@ -95,6 +93,16 @@ a.submit {
 .nav-bar {
   background-color: #343434;
   color: #fff;
+}
+
+.nav-bar.sticky {
+  position: fixed !important;
+  top: 0;
+  z-index: 10000;
+  width: 100%;
+}
+
+.main-container {
   position: relative;
 }
 
@@ -141,6 +149,13 @@ a.submit {
 
 .obl-submenu-row {
   display: none;
+  position: absolute;
+  top: 100%; /* Positions the submenu directly below its parent */
+  left: 0;
+  right: 0;
+  width: 100%; /* Sets the width to the full viewport width */
+  background-color: #202020; /* Ensures the background color extends fully */
+  z-index: 1000;
 }
 
 .navbar-menu:hover .obl-submenu-row {
@@ -335,7 +350,6 @@ a.submit {
 .menu-slider {
   padding-top: 5px;
   height: 210px;
-  margin-top: 155px;
   max-width: 1300px;
   margin-left: auto;
   margin-right: auto;
@@ -394,6 +408,26 @@ a.submit {
   cursor: pointer;
 }
 
+.close-icon {
+  cursor: pointer;
+}
+
+::ng-deep .custom-next-arrow {
+  color: #202020;
+  position: absolute;
+  top: 75px;
+  right: -35px;
+  cursor: pointer;
+}
+
+::ng-deep .custom-prev-arrow {
+  color: #202020;
+  position: absolute;
+  top: 75px;
+  cursor: pointer;
+  left: -35px;
+}
+
 .slick-prev:hover,
 .slick-next:hover {
   background-color: rgba(0, 0, 0, 0.8);
@@ -419,4 +453,144 @@ a.submit {
 
 ::ng-deep .slick-track {
   width: 2123px !important;
+}
+
+.user-account {
+  position: relative;
+}
+
+.content-info {
+  display: block;
+  padding-bottom: 2px;
+}
+
+.info-title {
+  font-size: 14px;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 15px;
+  height: 20px;
+  font-weight: 700;
+}
+
+.info-email {
+  height: 18px;
+  color: #282c3f;
+}
+
+.info-email,
+.info-title {
+  font-size: 14px;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 15px;
+}
+
+.get-user-in-links {
+  border: none;
+}
+
+.get-in-links {
+  display: inline-block;
+  width: 100%;
+  padding: 10px 0;
+  padding-bottom: 0px;
+  border-top: 1px solid #eaeaec;
+}
+
+.link-btn:first-child {
+  margin: 0 5px 6px 0;
+}
+
+.link-btn {
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 10px 10px 0 0;
+  border: 1px solid #eaeaec;
+  border-radius: 2px;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 14px;
+  color: var(--dynamic-app-color);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.link-btn:hover {
+  border: 1px solid var(--dynamic-app-color);
+}
+
+.info {
+  font-weight: 400;
+  font-size: 14px;
+  color: #3e4152;
+}
+
+.info-section {
+  margin: 0;
+  cursor: pointer;
+  padding: 7px 0 10px !important;
+}
+
+.info-section:hover {
+  color: #000;
+  font-weight: 700;
+}
+
+.user-account .block-minicart.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.user-account .block-minicart {
+  position: absolute;
+  width: 420px;
+  right: -15px;
+  margin-top: 16px;
+  border: 1px solid #ddd;
+  -webkit-box-shadow: 0px 0px 40px 0px rgba(181, 181, 181, 0.08);
+  -moz-box-shadow: 0px 0px 40px 0px rgba(181, 181, 181, 0.08);
+  box-shadow: 0px 0px 40px 0px rgba(181, 181, 181, 0.08);
+  padding: 10px 25px 10px 25px;
+  display: block;
+  transition: all 0.2s ease;
+  margin-top: 10px;
+}
+
+.user-account .block-minicart {
+  padding-top: 10px;
+}
+
+.minicart-wrapper .block-minicart {
+  margin: 0;
+  list-style: none none;
+  background: #fff;
+  min-width: 100%;
+  z-index: 100;
+  box-sizing: border-box;
+  top: 100%;
+}
+
+.block-minicart .subtitle.empty {
+  display: block;
+  font-size: 14px;
+  padding: 30px 0 20px;
+  text-align: center;
+}
+
+.display-none {
+  display: none !important;
+}
+
+.close-icon {
+  position: absolute;
+  top: 15px;
+  right: 18px;
+  color: #222 !important;
 }
