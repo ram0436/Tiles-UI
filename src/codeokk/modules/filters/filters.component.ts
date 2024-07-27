@@ -115,7 +115,6 @@ export class FiltersComponent implements OnInit {
     );
     this.masterService.rooms$.subscribe((data) => {
       this.rooms = data;
-      console.log(this.rooms);
     });
     this.masterService.designs$.subscribe((data) => (this.designs = data));
     this.masterService.finishes$.subscribe((data) => (this.finishes = data));

@@ -139,8 +139,8 @@ export class FilteredPostsComponent {
         this.filters.selectedDesigns?.[0] || 0,
         this.filters.selectedFinishes?.[0] || 0,
         this.filters.selectedBrands?.[0] || 0,
-        this.filters.selectedCategories?.[0] || 0,
-        this.filters.selectedDiscounts?.[0] || 0
+        this.filters.selectedDiscounts?.[0] || 0,
+        this.filters.selectedCategories?.[0] || 0
       )
     );
 
@@ -174,8 +174,8 @@ export class FilteredPostsComponent {
         this.filters.selectedDesigns?.[0] || 0,
         this.filters.selectedFinishes?.[0] || 0,
         this.filters.selectedBrands?.[0] || 0,
-        this.filters.selectedCategories?.[0] || 0,
-        this.filters.selectedDiscounts?.[0] || 0
+        this.filters.selectedDiscounts?.[0] || 0,
+        this.filters.selectedCategories?.[0] || 0
       )
     );
     this.isLoading = false;
