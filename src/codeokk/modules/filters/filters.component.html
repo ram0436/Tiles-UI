@@ -1,4 +1,90 @@
 <div class="filters">
+  <!-- Size -->
+  <div class="filter-sizes filter-main">
+    <span class="filter-title">Size (cm.)</span>
+    <ul class="sizes-list">
+      <li
+        *ngFor="let size of sizes; let i = index"
+        [ngClass]="{ hidden: !showAllSizes && i >= initialItemCount }"
+      >
+        <label class="custom-checkbox">
+          <input
+            type="checkbox"
+            [value]="size.id"
+            [checked]="selectedSizes.includes(size.id)"
+            (change)="toggleSize(size.id, $event)"
+          />
+          {{ size.size }}
+          <div class="checkbox-indicator"></div>
+        </label>
+      </li>
+      <li *ngIf="shouldShowShowMoreLink(sizes, 'sizes')">
+        <a class="show-more" (click)="showMoreItems('sizes')"> Show More </a>
+      </li>
+      <li *ngIf="shouldShowShowLessLink('sizes')">
+        <a class="show-less" (click)="showLessItems('sizes')"> Show Less </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Space -->
+  <div class="filter-shape filter-main">
+    <span class="filter-title">Spaces</span>
+    <ul class="shape-list">
+      <li
+        *ngFor="let space of spaces; let i = index"
+        [ngClass]="{ hidden: !showAllSpaces && i >= initialItemCount }"
+      >
+        <label class="custom-checkbox">
+          <input
+            type="checkbox"
+            [value]="space.id"
+            [checked]="selectedSpaces.includes(space.id)"
+            (change)="toggleSpace(space.id)"
+          />
+          {{ space.name }}
+          <div class="checkbox-indicator"></div>
+        </label>
+      </li>
+      <li *ngIf="shouldShowShowMoreLink(spaces, 'spaces')">
+        <a class="show-more" (click)="showMoreItems('spaces')"> Show More </a>
+      </li>
+      <li *ngIf="shouldShowShowLessLink('spaces')">
+        <a class="show-less" (click)="showLessItems('spaces')"> Show Less </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Finishes -->
+  <div class="filter-weaving-techniques filter-main">
+    <span class="filter-title">Finshes</span>
+    <ul class="weaving-techniques-list">
+      <li
+        *ngFor="let finish of finishes; let i = index"
+        [ngClass]="{
+          hidden: !showAllFinishes && i >= initialItemCount
+        }"
+      >
+        <label class="custom-checkbox">
+          <input
+            type="checkbox"
+            [value]="finish.id"
+            [checked]="selectedFinishes.includes(finish.id)"
+            (change)="toggleFinish(finish.id)"
+          />
+          {{ finish.name }}
+          <div class="checkbox-indicator"></div>
+        </label>
+      </li>
+      <li *ngIf="shouldShowShowMoreLink(finishes, 'finishes')">
+        <a class="show-more" (click)="showMoreItems('finishes')"> Show More </a>
+      </li>
+      <li *ngIf="shouldShowShowLessLink('finishes')">
+        <a class="show-less" (click)="showLessItems('finishes')"> Show Less </a>
+      </li>
+    </ul>
+  </div>
+
   <!-- Categories -->
   <div class="filter-sizes filter-main">
     <span class="filter-title">Categories</span>
@@ -30,6 +116,35 @@
       </li>
     </ul>
   </div>
+
+  <!-- Rooms -->
+  <div class="filter-material filter-main">
+    <span class="filter-title">Room</span>
+    <ul class="room-list">
+      <li
+        *ngFor="let room of rooms; let i = index"
+        [ngClass]="{ hidden: !showAllRooms && i >= initialItemCount }"
+      >
+        <label class="custom-checkbox">
+          <input
+            type="checkbox"
+            [value]="room.id"
+            [checked]="selectedRooms.includes(room.id)"
+            (change)="toggleRoom(room.id)"
+          />
+          {{ room.name }}
+          <div class="checkbox-indicator"></div>
+        </label>
+      </li>
+      <li *ngIf="shouldShowShowMoreLink(rooms, 'rooms')">
+        <a class="show-more" (click)="showMoreItems('rooms')"> Show More </a>
+      </li>
+      <li *ngIf="shouldShowShowLessLink('rooms')">
+        <a class="show-less" (click)="showLessItems('rooms')"> Show Less </a>
+      </li>
+    </ul>
+  </div>
+
   <!-- Brands -->
   <div class="filter-sizes filter-main">
     <span class="filter-title">Brands</span>
@@ -54,33 +169,6 @@
       </li>
       <li *ngIf="shouldShowShowLessLink('brands')">
         <a class="show-less" (click)="showLessItems('brands')"> Show Less </a>
-      </li>
-    </ul>
-  </div>
-  <!-- Size -->
-  <div class="filter-sizes filter-main">
-    <span class="filter-title">Size (cm.)</span>
-    <ul class="sizes-list">
-      <li
-        *ngFor="let size of sizes; let i = index"
-        [ngClass]="{ hidden: !showAllSizes && i >= initialItemCount }"
-      >
-        <label class="custom-checkbox">
-          <input
-            type="checkbox"
-            [value]="size.id"
-            [checked]="selectedSizes.includes(size.id)"
-            (change)="toggleSize(size.id, $event)"
-          />
-          {{ size.size }}
-          <div class="checkbox-indicator"></div>
-        </label>
-      </li>
-      <li *ngIf="shouldShowShowMoreLink(sizes, 'sizes')">
-        <a class="show-more" (click)="showMoreItems('sizes')"> Show More </a>
-      </li>
-      <li *ngIf="shouldShowShowLessLink('sizes')">
-        <a class="show-less" (click)="showLessItems('sizes')"> Show Less </a>
       </li>
     </ul>
   </div>
@@ -146,34 +234,6 @@
     </ul>
   </div>
 
-  <!-- Rooms -->
-  <div class="filter-material filter-main">
-    <span class="filter-title">Room</span>
-    <ul class="room-list">
-      <li
-        *ngFor="let room of rooms; let i = index"
-        [ngClass]="{ hidden: !showAllRooms && i >= initialItemCount }"
-      >
-        <label class="custom-checkbox">
-          <input
-            type="checkbox"
-            [value]="room.id"
-            [checked]="selectedRooms.includes(room.id)"
-            (change)="toggleRoom(room.id)"
-          />
-          {{ room.name }}
-          <div class="checkbox-indicator"></div>
-        </label>
-      </li>
-      <li *ngIf="shouldShowShowMoreLink(rooms, 'rooms')">
-        <a class="show-more" (click)="showMoreItems('rooms')"> Show More </a>
-      </li>
-      <li *ngIf="shouldShowShowLessLink('rooms')">
-        <a class="show-less" (click)="showLessItems('rooms')"> Show Less </a>
-      </li>
-    </ul>
-  </div>
-
   <!-- Material -->
   <div class="filter-material filter-main">
     <span class="filter-title">Material</span>
@@ -202,64 +262,6 @@
         <a class="show-less" (click)="showLessItems('materials')">
           Show Less
         </a>
-      </li>
-    </ul>
-  </div>
-
-  <!-- Space -->
-  <div class="filter-shape filter-main">
-    <span class="filter-title">Spaces</span>
-    <ul class="shape-list">
-      <li
-        *ngFor="let space of spaces; let i = index"
-        [ngClass]="{ hidden: !showAllSpaces && i >= initialItemCount }"
-      >
-        <label class="custom-checkbox">
-          <input
-            type="checkbox"
-            [value]="space.id"
-            [checked]="selectedSpaces.includes(space.id)"
-            (change)="toggleSpace(space.id)"
-          />
-          {{ space.name }}
-          <div class="checkbox-indicator"></div>
-        </label>
-      </li>
-      <li *ngIf="shouldShowShowMoreLink(spaces, 'spaces')">
-        <a class="show-more" (click)="showMoreItems('spaces')"> Show More </a>
-      </li>
-      <li *ngIf="shouldShowShowLessLink('spaces')">
-        <a class="show-less" (click)="showLessItems('spaces')"> Show Less </a>
-      </li>
-    </ul>
-  </div>
-
-  <!-- Finishes -->
-  <div class="filter-weaving-techniques filter-main">
-    <span class="filter-title">Finshes</span>
-    <ul class="weaving-techniques-list">
-      <li
-        *ngFor="let finish of finishes; let i = index"
-        [ngClass]="{
-          hidden: !showAllFinishes && i >= initialItemCount
-        }"
-      >
-        <label class="custom-checkbox">
-          <input
-            type="checkbox"
-            [value]="finish.id"
-            [checked]="selectedFinishes.includes(finish.id)"
-            (change)="toggleFinish(finish.id)"
-          />
-          {{ finish.name }}
-          <div class="checkbox-indicator"></div>
-        </label>
-      </li>
-      <li *ngIf="shouldShowShowMoreLink(finishes, 'finishes')">
-        <a class="show-more" (click)="showMoreItems('finishes')"> Show More </a>
-      </li>
-      <li *ngIf="shouldShowShowLessLink('finishes')">
-        <a class="show-less" (click)="showLessItems('finishes')"> Show Less </a>
       </li>
     </ul>
   </div>
@@ -295,35 +297,4 @@
       </li>
     </ul>
   </div>
-
-  <!-- Designer -->
-  <!-- <div class="filter-designer filter-main">
-      <span class="filter-title">Designer</span>
-      <ul class="designer-list">
-        <li
-          *ngFor="let designer of designers; let i = index"
-          [ngClass]="{ hidden: !showAllDesigners && i >= initialItemCount }"
-        >
-          <label class="custom-checkbox">
-            <input
-              type="checkbox"
-              [value]="designer.id"
-              (change)="toggleDesigner(designer.id)"
-            />
-            {{ designer.name }}
-            <div class="checkbox-indicator"></div>
-          </label>
-        </li>
-        <li *ngIf="shouldShowShowMoreLink(designers, 'designers')">
-          <a class="show-more" (click)="showMoreItems('designers')">
-            Show More
-          </a>
-        </li>
-        <li *ngIf="shouldShowShowLessLink('designers')">
-          <a class="show-less" (click)="showLessItems('designers')">
-            Show Less
-          </a>
-        </li>
-      </ul>
-    </div> -->
 </div>

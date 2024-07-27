@@ -46,93 +46,6 @@ export class HeaderComponent {
   collections: any[] = [];
   rooms: any[] = [];
 
-  slides = [
-    {
-      img: "https://server.orientbell.com/media/catalog/product/d/g/dgvt_chevron_weave_1.jpg",
-      text: "Wall Tile",
-    },
-    {
-      img: "https://server.orientbell.com/media/catalog/product/d/g/dgvt_cementum_crema_1.jpg",
-      text: "Bathroom Tile",
-    },
-    {
-      img: "https://server.orientbell.com/media/catalog/product/g/f/gft_spb_pulpis_grey_dk_f1.jpg",
-      text: "Floor Tile",
-    },
-    {
-      img: "https://server.orientbell.com/media/catalog/product/e/h/ehm_castle_multi_brown.png",
-      text: "Room Tile",
-    },
-    {
-      img: "https://server.orientbell.com/media/catalog/product/s/a/satin_onyx_silver_4.png",
-      text: "Marble Tile",
-    },
-    {
-      img: "https://server.orientbell.com/media/catalog/product/d/g/dgvt_jungi_multi_p1.jpg",
-      text: "Wooden Tile",
-    },
-    {
-      img: "https://server.orientbell.com/media/catalog/product/d/g/dgvt_jungi_bronze_1.jpg",
-      text: "Vitrified Tile",
-    },
-    {
-      img: "https://server.orientbell.com/media/catalog/product/g/f/gft_sph_multi_rhombus_grey_hl.jpg",
-      text: "Ceramic Tile",
-    },
-    {
-      img: "https://server.orientbell.com/media/catalog/product/g/f/gft_sph_geometric_grey_hl.png",
-      text: "Cool Tile",
-    },
-    {
-      img: "https://server.orientbell.com/media/catalog/product/o/d/odh_wave_wood_hl.png",
-      text: "Large Tile",
-    },
-    {
-      img: "https://server.orientbell.com/media/catalog/product/o/d/odh_arrow_wood_hl.png",
-      text: "Kitchen Tile",
-    },
-  ];
-
-  slideConfig = {
-    slidesToShow: 7,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 4000,
-    arrows: true,
-    infinite: false,
-    prevArrow:
-      '<div class="custom-prev-arrow"><i class="material-icons-outlined">arrow_back_ios</i></div>',
-    nextArrow:
-      '<div class="custom-next-arrow"><i class="material-icons-outlined">arrow_forward_ios</i></div>',
-    pauseOnHover: true,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 5,
-          slidesToScroll: 1,
-          infinte: false,
-        },
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 1,
-          infinte: false,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          infinte: false,
-        },
-      },
-    ],
-  };
-
   constructor(
     private el: ElementRef,
     private renderer: Renderer2,
@@ -238,6 +151,4 @@ export class HeaderComponent {
       );
     }
   }
-
-  slickInit(e: any) {}
 }
