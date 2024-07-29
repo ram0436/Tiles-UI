@@ -15,6 +15,26 @@
                   New
                 </strong>
               </span>
+              <span
+                *ngIf="!this.wishlistRoute"
+                class="material-icons mobile-wishlist wishlist-icon"
+                title="Add in Wishlist"
+                (click)="toggleFavorite($event, product?.productCode)"
+                [class.favorite-added-bg]="favoriteStatus[product.productCode]"
+              >
+                {{
+                  favoriteStatus[product.productCode]
+                    ? "favorite"
+                    : "favorite_border"
+                }}
+              </span>
+              <span
+                class="close-icon material-icons"
+                (click)="removeItemFromWishlist($event, product?.cartId)"
+                *ngIf="this.wishlistRoute"
+              >
+                close
+              </span>
             </div>
             <div class="product-info">
               <a>
@@ -51,7 +71,8 @@
         products.length !== 0 &&
         !productDetailsRoute &&
         !isMoreProductsLoading &&
-        !noMoreProducts
+        !noMoreProducts &&
+        !this.wishlistRoute
       "
     >
       Load More

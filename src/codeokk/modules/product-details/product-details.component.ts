@@ -1,7 +1,9 @@
 import {
   Component,
   ElementRef,
+  EventEmitter,
   HostListener,
+  Output,
   Renderer2,
   ViewChild,
 } from "@angular/core";
@@ -9,10 +11,11 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { ProductService } from "src/codeokk/shared/service/product.service";
 import { UserService } from "../user/service/user.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { MatDialog } from "@angular/material/dialog";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { MasterService } from "../service/master.service";
 import { Observable, forkJoin } from "rxjs";
 import { map } from "rxjs/operators";
+import { LoginComponent } from "../user/component/login/login.component";
 
 @Component({
   selector: "app-product-details",
@@ -22,6 +25,14 @@ import { map } from "rxjs/operators";
 export class ProductDetailsComponent {
   activeSection: string = "Details";
   productDetails: any = [];
+
+  @Output() itemAddedToCart = new EventEmitter<void>();
+
+  showModal: boolean = false;
+  favoriteStatus: { [key: string]: boolean } = {};
+  selectedSize: number | null = null;
+  dialogRef: MatDialogRef<any> | null = null;
+  isUserLogedIn: boolean = false;
 
   sizesMap: Map<number, string> = new Map();
   sizes: any[] = [];
@@ -47,6 +58,15 @@ export class ProductDetailsComponent {
 
   showLeftArrow: boolean = false;
   showRightArrow: boolean = true;
+
+  currentIndex = 0;
+
+  reviewsData: any[] = [];
+  averageRating: number = 0;
+  totalRatings: number = 0;
+  ratingDistribution: { level: number; count: number; percentage: number }[] =
+    [];
+  showAllReviews: boolean = false;
 
   slides = [
     {
@@ -156,6 +176,63 @@ export class ProductDetailsComponent {
     if (productCode != null) {
       this.getPostDetails(productCode);
     }
+  }
+
+  getRatingData(productId: any) {
+    this.userService.GetRatingReviewByProductId(productId).subscribe(
+      (data: any) => {
+        this.reviewsData = data;
+        this.calculateAverageAndTotalRatings();
+        this.calculateRatingDistribution();
+      },
+      (error: any) => {}
+    );
+  }
+
+  calculateAverageAndTotalRatings() {
+    if (this.reviewsData.length > 0) {
+      this.totalRatings = this.reviewsData.length;
+
+      const sumOfRatings = this.reviewsData.reduce(
+        (total, review) => total + review.rating,
+        0
+      );
+      this.averageRating = sumOfRatings / this.totalRatings;
+    }
+  }
+
+  calculateRatingDistribution() {
+    const ratingCounts = [0, 0, 0, 0, 0];
+
+    this.reviewsData.forEach((review) => {
+      if (review.rating >= 1 && review.rating <= 5) {
+        ratingCounts[review.rating - 1]++;
+      }
+    });
+
+    this.ratingDistribution = ratingCounts.map((count, index) => {
+      const percentage = (count / this.totalRatings) * 100;
+      return { level: 5 - index, count, percentage };
+    });
+
+    this.ratingDistribution.reverse();
+  }
+
+  toggleReviews() {
+    this.showAllReviews = !this.showAllReviews;
+  }
+
+  parseAverageRating(): number {
+    return parseFloat(this.averageRating.toFixed(1));
+  }
+
+  formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
   }
 
   // ngAfterViewInit(): void {
@@ -276,6 +353,8 @@ export class ProductDetailsComponent {
 
       this.isLoading = false;
 
+      this.getRatingData(this.productDetails.id);
+
       if (
         this.productDetails.productImageList &&
         this.productDetails.productImageList.length > 0
@@ -319,5 +398,48 @@ export class ProductDetailsComponent {
   onMouseLeave(event: MouseEvent) {
     const img = event.target as HTMLImageElement;
     img.style.setProperty("--zoom", "1");
+  }
+
+  addToBag(productId: string) {
+    if (localStorage.getItem("id") != null) {
+      const cartItem = {
+        id: 0,
+        productCode: productId,
+        createdBy: Number(localStorage.getItem("id")),
+        createdOn: new Date().toISOString(),
+        modifiedBy: Number(localStorage.getItem("id")),
+        modifiedOn: new Date().toISOString(),
+        userId: Number(localStorage.getItem("id")),
+      };
+
+      this.userService.addToCart(cartItem).subscribe(
+        (response: any) => {
+          this.showNotification("Successfully Added to Cart");
+        },
+        (error: any) => {}
+      );
+    } else {
+      this.openLoginModal();
+    }
+  }
+
+  showNotification(message: string): void {
+    this.snackBar.open(message, "Close", {
+      duration: 5000,
+      horizontalPosition: "end",
+      verticalPosition: "top",
+    });
+  }
+
+  openLoginModal() {
+    if (this.dialogRef) {
+      this.dialogRef.close();
+    }
+
+    this.dialogRef = this.dialog.open(LoginComponent, { width: "450px" });
+
+    this.dialogRef.afterClosed().subscribe((result) => {
+      if (localStorage.getItem("authToken") != null) this.isUserLogedIn = true;
+    });
   }
 }

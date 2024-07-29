@@ -25,9 +25,7 @@ export class ProductService {
   }
 
   getProductByProductId(id: any) {
-    return this.http.get(
-      `${this.BaseURL}Product/GetProductByProductId?productId=${id}`
-    );
+    return this.http.get(`${this.BaseURL}Product/GetProductById?id=${id}`);
   }
 
   deleteProduct(id: any) {
