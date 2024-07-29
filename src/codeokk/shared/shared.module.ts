@@ -23,9 +23,17 @@ import {
 } from "@angular/material/autocomplete";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { SlickCarouselModule } from "ngx-slick-carousel";
+import { SharedOrdersComponent } from "./component/shared-orders/shared-orders.component";
+import { StarRatingComponent } from "./component/star-rating/star-rating.component";
 
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent, PostCardsComponent],
+  declarations: [
+    HeaderComponent,
+    FooterComponent,
+    PostCardsComponent,
+    StarRatingComponent,
+    SharedOrdersComponent,
+  ],
   imports: [
     CommonModule,
     RouterModule,
@@ -54,7 +62,13 @@ import { SlickCarouselModule } from "ngx-slick-carousel";
     MatProgressSpinnerModule,
     SlickCarouselModule,
   ],
-  exports: [HeaderComponent, FooterComponent, PostCardsComponent],
+  exports: [
+    HeaderComponent,
+    FooterComponent,
+    PostCardsComponent,
+    SharedOrdersComponent,
+    StarRatingComponent,
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class SharedModule {}

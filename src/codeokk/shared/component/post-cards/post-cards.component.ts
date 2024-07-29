@@ -6,11 +6,12 @@ import {
   Output,
   Renderer2,
 } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import { UserService } from "src/codeokk/modules/user/service/user.service";
 import { ProductService } from "../../service/product.service";
+import { LoginComponent } from "src/codeokk/modules/user/component/login/login.component";
 @Component({
   selector: "app-post-cards",
   templateUrl: "./post-cards.component.html",
@@ -28,6 +29,28 @@ export class PostCardsComponent {
   // Pagination properties
   currentPage: number = 1;
   productsPerPage: number = 16;
+
+  ratingsMap: Map<string, { averageRating: number; totalRatings: number }> =
+    new Map();
+  isScreenSmall: boolean = false;
+  @Output() itemRemovedFromWishlist = new EventEmitter<void>();
+  favoriteStatus: { [key: string]: boolean } = {};
+  isUserLogedIn: boolean = false;
+  filteredPostsRoute: boolean = false;
+  dialogRef: MatDialogRef<any> | null = null;
+
+  wishlistCount: number = 0;
+
+  selectedSize: number | null = null;
+
+  showModal: boolean = false;
+  selectedProduct: any;
+
+  hoveredProduct: string | null = null;
+  isAdmin: boolean = false;
+
+  showAdminOptions: boolean = false;
+  adminOptionsVisibleFor: string | null = null;
 
   constructor(
     private router: Router,
@@ -57,86 +80,79 @@ export class PostCardsComponent {
     this.pageChange.emit(this.currentPage);
   }
 
-  goToPage(page: number) {
-    if (page >= 1) {
-      this.currentPage = page;
-      this.pageChange.emit(this.currentPage);
+  removeItemFromWishlist(event: Event, cartId: any) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    this.userService
+      .removeItemFromWishlist(cartId, Number(localStorage.getItem("id")))
+      .subscribe(
+        (response: any) => {
+          this.products = this.products.filter(
+            (product: any) => product.cartId !== cartId
+          );
+          this.itemRemovedFromWishlist.emit();
+        },
+        (error) => {}
+      );
+  }
+
+  toggleFavorite(event: Event, productId: string) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (localStorage.getItem("id") != null) {
+      // Toggle favorite status
+      this.favoriteStatus[productId] = !this.favoriteStatus[productId];
+
+      // Call addToWishlist method
+      if (this.favoriteStatus[productId]) {
+        this.addToWishlist(productId);
+      } else {
+        // You can implement removal from wishlist if needed
+      }
+    } else {
+      this.openLoginModal();
     }
   }
 
-  previousPage() {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.pageChange.emit(this.currentPage);
+  openLoginModal() {
+    if (this.dialogRef) {
+      this.dialogRef.close();
     }
+
+    this.dialogRef = this.dialog.open(LoginComponent, { width: "450px" });
+
+    this.dialogRef.afterClosed().subscribe((result) => {
+      if (localStorage.getItem("authToken") != null) this.isUserLogedIn = true;
+    });
   }
 
-  nextPage() {
-    if (
-      this.currentPage < Math.ceil(this.products.length / this.productsPerPage)
-    ) {
-      this.currentPage++;
-      this.pageChange.emit(this.currentPage);
-    }
-  }
+  addToWishlist(productId: string) {
+    const wishlistItem = {
+      id: 0,
+      productCode: productId,
+      createdBy: Number(localStorage.getItem("id")),
+      userId: Number(localStorage.getItem("id")),
+      modifiedBy: Number(localStorage.getItem("id")),
+      // createdBy: localStorage.getItem("id"),
+      createdOn: new Date().toISOString(),
+      modifiedOn: new Date().toISOString(),
+    };
 
-  get startIndex(): number {
-    return (this.currentPage - 1) * this.productsPerPage;
-  }
-
-  get endIndex(): number {
-    return Math.min(
-      this.startIndex + this.productsPerPage,
-      this.products.length
+    this.userService.addWishList(wishlistItem).subscribe(
+      (response: any) => {
+        this.showNotification("Successfully Added to Wishlist");
+      },
+      (error: any) => {}
     );
   }
 
-  get pageNumbers(): (number | string)[] {
-    const totalPages = Math.ceil(this.products.length / this.productsPerPage);
-    const currentPage = this.currentPage;
-
-    if (totalPages <= 5) {
-      return Array.from({ length: totalPages }, (_, i) => i + 1);
-    }
-
-    let pages: (number | string)[] = [];
-
-    if (currentPage <= 2) {
-      pages = [1, 2, 3, "...", totalPages];
-    } else if (currentPage >= 3 && currentPage < totalPages - 2) {
-      pages = [
-        1,
-        "...",
-        currentPage - 1,
-        currentPage,
-        currentPage + 1,
-        "...",
-        totalPages,
-      ];
-    } else {
-      pages = [1, "...", totalPages - 2, totalPages - 1, totalPages];
-    }
-
-    return pages;
-  }
-
-  isNumber(value: any): value is number {
-    return typeof value === "number";
-  }
-
-  get totalPages(): number {
-    return Math.ceil(this.products.length / this.productsPerPage);
-  }
-
-  get currentPageProducts(): any[] {
-    return this.products.slice(this.startIndex, this.endIndex);
-  }
-
-  previousPageDisabled(): boolean {
-    return this.currentPage === 1;
-  }
-
-  nextPageDisabled(): boolean {
-    return this.currentPage >= this.totalPages;
+  showNotification(message: string): void {
+    this.snackBar.open(message, "Close", {
+      duration: 5000,
+      horizontalPosition: "end",
+      verticalPosition: "top",
+    });
   }
 }
