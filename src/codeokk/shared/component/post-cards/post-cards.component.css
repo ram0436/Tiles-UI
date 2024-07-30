@@ -142,6 +142,46 @@
   color: #fff;
 }
 
+.product-options {
+  font-size: 24px;
+  color: #000;
+  position: absolute;
+  bottom: -65px;
+  right: 0px;
+  cursor: pointer;
+}
+
+.edit-product-icon {
+  color: #000;
+  font-size: 22px;
+}
+
+.admin-option {
+  font-size: 14px;
+  font-weight: normal;
+  padding: 5px 10px;
+}
+
+.admin-option:hover {
+  background-color: #f6f6f6;
+  color: var(--dynamic-app-color);
+}
+
+.option {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  position: absolute;
+  left: -60px;
+  top: 13px;
+
+  border: 1px solid #b7b7b7;
+  border-radius: 3px;
+  /* align-items: center; */
+  /* gap: 5px; */
+}
+
 .product-info {
   text-align: center;
   margin-top: 1rem;
