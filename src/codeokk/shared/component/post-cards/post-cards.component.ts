@@ -75,6 +75,12 @@ export class PostCardsComponent {
     });
   }
 
+  ngOnInit() {
+    var role = localStorage.getItem("role");
+    if (role != null && role == "Admin") this.isAdmin = true;
+    else this.isAdmin = false;
+  }
+
   loadMore() {
     this.currentPage = this.currentPage + 1;
     this.pageChange.emit(this.currentPage);
@@ -95,6 +101,16 @@ export class PostCardsComponent {
         },
         (error) => {}
       );
+  }
+
+  toggleAdminOptions(event: Event, productCode: string) {
+    event.stopPropagation();
+    event.preventDefault();
+    if (this.adminOptionsVisibleFor === productCode) {
+      this.adminOptionsVisibleFor = null;
+    } else {
+      this.adminOptionsVisibleFor = productCode;
+    }
   }
 
   toggleFavorite(event: Event, productId: string) {
@@ -126,6 +142,26 @@ export class PostCardsComponent {
     this.dialogRef.afterClosed().subscribe((result) => {
       if (localStorage.getItem("authToken") != null) this.isUserLogedIn = true;
     });
+  }
+
+  deleteProduct(event: Event, productId: any) {
+    event.stopPropagation();
+    event.preventDefault();
+    this.productService.deleteProduct(productId).subscribe(
+      (response: any) => {
+        this.showNotification("Product Deleted Successfylly");
+        window.location.reload();
+      },
+      (error: any) => {}
+    );
+  }
+
+  editProduct(event: Event, product: any) {
+    event.stopPropagation();
+    event.preventDefault();
+    this.router.navigateByUrl(
+      `admin/dashboard?editProduct=true&code=${product.productCode}`
+    );
   }
 
   addToWishlist(productId: string) {
