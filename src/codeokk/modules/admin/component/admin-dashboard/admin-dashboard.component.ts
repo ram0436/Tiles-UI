@@ -229,7 +229,7 @@ export class AdminDashboardComponent {
     this.productService
       .getProductByProductCode(productCode)
       .subscribe((data: any) => {
-        this.product = data;
+        this.product = data[0];
         data[0].productImageList.forEach((image: any, index: any) => {
           this.cardsCount[index] = image.imageURL;
         });
@@ -251,9 +251,10 @@ export class AdminDashboardComponent {
         this.productPayload.designId = data[0].design[0]?.id || 0;
         this.productPayload.inStock = data[0].inStock;
         this.productPayload.productImageList = data[0].productImageList.map(
-          (img: any) => ({
-            id: img.id,
-            imageURL: img.imageURL,
+          (data: any) => ({
+            id: data.id,
+            imageURL: data.imageURL,
+            productId: data.productId,
           })
         );
         this.productPayload.productSizeMappingsList =
@@ -292,13 +293,14 @@ export class AdminDashboardComponent {
 
   updateProduct(productId: any) {
     this.loadInitialPayload();
-    var finalPayload = this.addAttachmentsPayload(this.payload);
-    if (this.validatePostForm(finalPayload))
+    this.payload.productImageList = this.productPayload.productImageList;
+    if (this.validatePostForm(this.payload)) {
       this.productService
-        .updateProduct(productId, finalPayload)
+        .updateProduct(productId, this.payload)
         .subscribe((data) => {
           this.showNotification("Product Updated Succesfully");
         });
+    }
   }
 
   loadInitialPayload() {
@@ -316,6 +318,13 @@ export class AdminDashboardComponent {
         productSizeId: sizeId,
         price: this.productPayload.price,
       }));
+
+    // Map the tag list
+    const tagList = this.productPayload.tagList.map((tag: any) => ({
+      id: tag.id || 0, // Ensure each tag has an ID
+      name: tag.name,
+      productId: this.product.id || 0,
+    }));
 
     this.payload = {
       createdBy: Number(localStorage.getItem("id")),
@@ -340,7 +349,7 @@ export class AdminDashboardComponent {
       productCode: this.productPayload.productCode,
       description: this.productPayload.description,
       productSizeMappingsList: productSizeMappingsList,
-      tagList: this.productPayload.tagList,
+      tagList: tagList,
     };
   }
 
@@ -403,6 +412,25 @@ export class AdminDashboardComponent {
       flag = true;
     }
     return flag;
+  }
+
+  add(event: MatChipInputEvent): void {
+    const value = (event.value || "").trim();
+    if (value) {
+      this.productPayload.tagList.push({
+        id: 0,
+        name: value,
+      });
+    }
+    event.chipInput!.clear();
+    this.tagCtrl.setValue(null);
+  }
+
+  remove(fruit: string): void {
+    const index = this.productPayload.tagList.indexOf(fruit);
+    if (index >= 0) {
+      this.productPayload.tagList.splice(index, 1);
+    }
   }
 
   isParentCategorySelected(parentCategoryId: number) {
@@ -604,26 +632,6 @@ export class AdminDashboardComponent {
     }
   }
 
-  add(event: MatChipInputEvent): void {
-    const value = (event.value || "").trim();
-    if (value) {
-      this.productPayload.tagList.push({
-        id: 0,
-        name: value,
-        projectCodeId: 0,
-      });
-    }
-    event.chipInput!.clear();
-    this.tagCtrl.setValue(null);
-  }
-
-  remove(fruit: string): void {
-    const index = this.productPayload.tagList.indexOf(fruit);
-    if (index >= 0) {
-      this.productPayload.tagList.splice(index, 1);
-    }
-  }
-
   selectFile() {
     if (this.document) {
       const uploadElement = this.document.getElementById("fileUpload");
@@ -674,71 +682,17 @@ export class AdminDashboardComponent {
   addAttachmentsPayload(commonPayload: any): any {
     var imageList: { id: number; imageURL: any }[] = [];
     this.cardsCount.forEach((imageURL) => {
-      if (imageURL != "") imageList.push({ id: 0, imageURL: imageURL });
+      if (imageURL != "")
+        imageList.push({
+          id: 0,
+          imageURL: imageURL,
+        });
     });
 
     var payload = Object.assign({}, commonPayload, {
       productImageList: imageList,
     });
     return payload;
-  }
-
-  getCategoryByParentCategoryId(parentCategoryId: number) {
-    // this.masterService
-    //   .getCategoryByParentCategoryId(parentCategoryId)
-    //   .subscribe((data: any) => {
-    //     this.categoryMap[parentCategoryId] = data.map((category: any) => ({
-    //       ...category,
-    //       expanded: false,
-    //       completed: false,
-    //     }));
-    //     data.forEach((category: any) => {
-    //       this.getSubCategoryByCategoryId(category.id);
-    //       this.getBrandsByCategoryId(category.id);
-    //     });
-    //   });
-  }
-
-  getSubCategoryByCategoryId(categoryId: number) {
-    // this.masterService
-    //   .getSubCategoryByCategoryId(categoryId)
-    //   .subscribe((data: any) => {
-    //     this.subCategoryMap[categoryId] = data.map((subCategory: any) => ({
-    //       ...subCategory,
-    //       completed: false,
-    //     }));
-    //     data.forEach((subCategory: any) => {
-    //       this.getBrandsBySubCategoryId(subCategory.id);
-    //     });
-    //     this.brandSubCategories = this.brandSubCategories.concat(data);
-    //     this.brandSubCategories = Array.from(
-    //       new Set(
-    //         this.brandSubCategories.map((subCategory) => subCategory.name)
-    //       )
-    //     ).map((name) =>
-    //       this.brandSubCategories.find(
-    //         (subCategory) => subCategory.name === name
-    //       )
-    //     );
-    //   });
-  }
-
-  getBrandsByCategoryId(categoryId: number) {
-    // this.masterService
-    //   .getBrandByCategoryId(categoryId)
-    //   .subscribe((data: any) => {
-    //     this.brands = this.brands.concat(data);
-    //     this.removeDuplicateBrands();
-    //   });
-  }
-
-  getBrandsBySubCategoryId(subCategoryId: number) {
-    // this.masterService
-    //   .getBrandBySubCategoryId(subCategoryId)
-    //   .subscribe((data: any) => {
-    //     this.brands = this.brands.concat(data);
-    //     this.removeDuplicateBrands();
-    //   });
   }
 
   removeDuplicateBrands() {

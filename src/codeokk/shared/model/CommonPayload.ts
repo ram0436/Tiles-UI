@@ -17,6 +17,6 @@ export class Common {
   productCode: string = "";
   description: string = "";
   tagList: any[] = [];
-  productImageList: { id: number; imageURL: any }[] = [];
+  productImageList: { id: number; imageURL: any; productId: any }[] = [];
   productSizeMappingsList: any[] = [];
 }
